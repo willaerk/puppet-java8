@@ -28,17 +28,11 @@ class java8 {
               'src' => true,
             }
           }
-
-          Apt::Source['webupd8team-java'] -> Class['apt::update']
-          Class['apt::update'] -> Package['oracle-java8-installer']
         }
         ubuntu: {
           apt::ppa { 'ppa:webupd8team/java':
             package_manage => true
           }
-
-          Apt::Ppa['ppa:webupd8team/java'] -> Class['apt::update']
-          Class['apt::update'] -> Package['oracle-java8-installer']
         }
       }
 
