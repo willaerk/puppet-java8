@@ -40,16 +40,16 @@ class java8 {
         }
       }
 
-      file { 'java8.preseed':
+      file { 'oracle-java8-installer.preseed':
         path   => '/var/tmp/oracle-java8-installer.preseed',
-        source => 'puppet:///modules/java8/java.preseed',
+        source => 'puppet:///modules/java8/oracle-java8-installer.preseed',
         mode   => '0600',
         backup => false,
       }
 
       package { 'oracle-java8-installer':
         responsefile => '/var/tmp/oracle-java8-installer.preseed',
-        require      => File['java8.preseed']
+        require      => File['oracle-java8-installer.preseed']
       }
 
       systemenv::var { 'JAVA_HOME':
