@@ -15,34 +15,24 @@ class java8 {
 
       case $::operatingsystem {
         debian: {
-          apt::source { 'webupd8team-java':
-            location => 'http://ppa.launchpad.net/webupd8team/java/ubuntu',
-            release  => 'precise',
-            repos    => 'main',
-            key      => {
-              'id'     => '7B2C3B0889BF5709A105D03AC2518248EEA14886',
-              'server' => 'keyserver.ubuntu.com',
-            },
-            include  => {
-              'deb' => true,
-              'src' => true,
-            }
-          }
+          $release = 'precise'
         }
         ubuntu: {
-          apt::source { 'webupd8team-java':
-            location => 'http://ppa.launchpad.net/webupd8team/java/ubuntu',
-            release  => $::lsbdistcodename,
-            repos    => 'main',
-            key      => {
-              'id'     => '7B2C3B0889BF5709A105D03AC2518248EEA14886',
-              'server' => 'keyserver.ubuntu.com',
-            },
-            include  => {
-              'deb' => true,
-              'src' => true,
-            }
-          }
+          $release = $::lsbdistcodename
+        }
+      }
+
+      apt::source { 'webupd8team-java':
+        location => 'http://ppa.launchpad.net/webupd8team/java/ubuntu',
+        release  => $release,
+        repos    => 'main',
+        key      => {
+          'id'     => '7B2C3B0889BF5709A105D03AC2518248EEA14886',
+          'server' => 'keyserver.ubuntu.com',
+        },
+        include  => {
+          'deb' => true,
+          'src' => true,
         }
       }
 
@@ -61,6 +51,8 @@ class java8 {
       systemenv::var { 'JAVA_HOME':
         value => '/usr/lib/jvm/java-8-oracle/jre'
       }
+
+      Class['apt::update'] -> Package['oracle-java8-installer']
     }
     default: {
       notice "Unsupported operatingsystem ${::operatingsystem}"
