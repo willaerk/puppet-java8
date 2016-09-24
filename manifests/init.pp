@@ -30,8 +30,18 @@ class java8 {
           }
         }
         ubuntu: {
-          apt::ppa { 'ppa:webupd8team/java':
-            package_manage => true
+          apt::source { 'webupd8team-java':
+            location => 'http://ppa.launchpad.net/webupd8team/java/ubuntu',
+            release  => $facts['os']['lsb']['distcodename'],
+            repos    => 'main',
+            key      => {
+              'id'     => '7B2C3B0889BF5709A105D03AC2518248EEA14886',
+              'server' => 'keyserver.ubuntu.com',
+            },
+            include  => {
+              'deb' => true,
+              'src' => true,
+            }
           }
         }
       }
