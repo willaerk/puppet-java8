@@ -32,7 +32,7 @@ class java8 {
         ubuntu: {
           apt::source { 'webupd8team-java':
             location => 'http://ppa.launchpad.net/webupd8team/java/ubuntu',
-            release  => $facts['os']['lsb']['distcodename'],
+            release  => $::lsbdistcodename,
             repos    => 'main',
             key      => {
               'id'     => '7B2C3B0889BF5709A105D03AC2518248EEA14886',
