@@ -49,7 +49,7 @@ class java8 {
       }
 
       systemenv::var { 'JAVA_HOME':
-        value => '/usr/lib/jvm/java-8-oracle/jre'
+        value => '/usr/lib/jvm/java-8-oracle'
       }
 
       Class['apt::update'] -> Package['oracle-java8-installer']
