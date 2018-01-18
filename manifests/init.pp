@@ -7,7 +7,7 @@
 # Sample Usage:
 #  include java8
 class java8 (
-  $version = 'latest'
+  $installer_version = 'latest'
 ) {
   case $::operatingsystem {
     debian, ubuntu: {
@@ -46,7 +46,7 @@ class java8 (
       }
 
       package { 'oracle-java8-installer':
-        ensure       => $version,
+        ensure       => $installer_version,
         responsefile => '/var/tmp/oracle-java8-installer.preseed',
         require      => File['oracle-java8-installer.preseed']
       }
