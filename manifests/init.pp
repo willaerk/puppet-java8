@@ -7,7 +7,8 @@
 # Sample Usage:
 #  include java8
 class java8 (
-  $installer_version = 'latest'
+  $installer_version = 'latest',
+  $manage_repos      = true
 ) {
   case $::operatingsystem {
     debian, ubuntu: {
@@ -15,26 +16,28 @@ class java8 (
       include apt
       include systemenv
 
-      case $::operatingsystem {
-        debian: {
-          $release = 'precise'
+      if $manage_repos {
+        case $::operatingsystem {
+          debian: {
+            $release = 'precise'
+          }
+          ubuntu: {
+            $release = $::lsbdistcodename
+          }
         }
-        ubuntu: {
-          $release = $::lsbdistcodename
-        }
-      }
 
-      apt::source { 'webupd8team-java':
-        location => 'http://ppa.launchpad.net/webupd8team/java/ubuntu',
-        release  => $release,
-        repos    => 'main',
-        key      => {
-          'id'     => '7B2C3B0889BF5709A105D03AC2518248EEA14886',
-          'server' => 'keyserver.ubuntu.com',
-        },
-        include  => {
-          'deb' => true,
-          'src' => true,
+        apt::source { 'webupd8team-java':
+          location => 'http://ppa.launchpad.net/webupd8team/java/ubuntu',
+          release  => $release,
+          repos    => 'main',
+          key      => {
+            'id'     => '7B2C3B0889BF5709A105D03AC2518248EEA14886',
+            'server' => 'keyserver.ubuntu.com',
+          },
+          include  => {
+            'deb' => true,
+            'src' => true,
+          }
         }
       }
 
