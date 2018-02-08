@@ -7,7 +7,7 @@
 # Sample Usage:
 #  include java8
 class java8 (
-  $installer_version = 'latest',
+  $installer_version = 'present',
   $manage_repos      = true
 ) {
   case $::operatingsystem {
