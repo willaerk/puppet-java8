@@ -14,7 +14,6 @@ class java8 (
     debian, ubuntu: {
 
       include apt
-      include systemenv
 
       if $manage_repos {
         case $::operatingsystem {
