@@ -53,11 +53,12 @@ class java8 (
         require      => File['oracle-java8-installer.preseed']
       }
 
-      #shellvar { 'JAVA_HOME':
-        #  ensure => 'present',
-        #target => '/etc/environment',
-        #value  => '/usr/lib/jvm/java-8-oracle'
-        #}
+      shellvar { 'configure JAVA_HOME':
+        ensure   => 'present',
+        variable => 'JAVA_HOME',
+        target   => '/etc/environment',
+        value    => '/usr/lib/jvm/java-8-oracle'
+      }
 
       Class['apt::update'] -> Package['oracle-java8-installer']
     }
